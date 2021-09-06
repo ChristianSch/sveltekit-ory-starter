@@ -8,6 +8,18 @@ services:
     env_file: ./.env
     ports:
       - '5432:5432'
+    networks:
+      - intranet
+
+  kratos-migrate:
+    build:
+      context: ./infra/kratos
+    depends_on:
+      - db
+    env_file: ./.env
+    command: ['migrate', 'sql', '--read-from-env', '--config', '/home/ory/kratos.yml', '--yes']
+    networks:
+      - intranet
 
   kratos:
     build:
@@ -22,6 +34,19 @@ services:
       - postgres:/var/lib/postgresql/data
     depends_on:
       - db
+    networks:
+      - intranet
+
+  mailslurper:
+    image: oryd/mailslurper:latest-smtps
+    ports:
+      - '4436:4436'
+      - '4437:4437'
+    networks:
+      - intranet
+
+networks:
+  intranet:
 
 volumes:
   postgres:
