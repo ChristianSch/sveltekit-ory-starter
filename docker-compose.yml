@@ -24,6 +24,8 @@ services:
       - data:/var/lib/postgresql/data
     networks:
       - intranet
+    depends_on:
+      - db
 
 networks:
   intranet:
