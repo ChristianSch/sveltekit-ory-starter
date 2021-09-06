@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:latest
+    volumes:
+      - data:/var/lib/postgresql/data
+    env_file: ./.env.local #Here we are using the already existing .env.local file
+    ports:
+      - '5432:5432'
+    networks:
+      - intranet
+
+  kratos:
+    image: oryd/kratos:v0.7.3-alpha.1
+    env_file: ./.env.local
+    ports:
+      - '4433:4433'
+      - '4434:4434'
+    restart: unless-stopped
+    command: serve -c /etc/config/kratos/kratos.yml --dev --watch-courier
+    volumes:
+      - data:/var/lib/postgresql/data
+    networks:
+      - intranet
+
+networks:
+  intranet:
+
+volumes:
+  data:
