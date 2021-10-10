@@ -12,28 +12,40 @@ services:
       - intranet
 
   kratos-migrate:
-    build:
-      context: ./infra/kratos
     depends_on:
       - db
-    env_file: ./.env
-    command: ['migrate', 'sql', '--read-from-env', '--config', '/home/ory/kratos.yml', '--yes']
+    image: oryd/kratos:v0.7.6-alpha.1
+    env_file:
+      - ./.env
+    volumes:
+      - type: bind
+        source: ./infra/kratos
+        target: /etc/config/kratos
+    command: -c /etc/config/kratos/kratos.yml migrate sql -e --yes
+    restart: on-failure
     networks:
       - intranet
 
+  kratos-cli:
+    image: oryd/kratos:v0.7.6-alpha.1
+    environment:
+      - KRATOS_ADMIN_URL=http://kratos:4434
+
   kratos:
-    build:
-      context: ./infra/kratos
-    env_file: ./.env
+    depends_on:
+      - kratos-migrate
+    image: oryd/kratos:v0.7.6-alpha.1
     ports:
       - '4433:4433'
       - '4434:4434'
-    restart: unless-stopped
-    command: serve -c ./home/ory/kratos.yml --dev --watch-courier
+    env_file:
+      - ./.env
     volumes:
-      - postgres:/var/lib/postgresql/data
-    depends_on:
-      - kratos-migrate
+      - type: bind
+        source: ./infra/kratos
+        target: /etc/config/kratos
+    command: serve -c /etc/config/kratos/kratos.yml --dev --watch-courier
+    restart: unless-stopped
     networks:
       - intranet
 
