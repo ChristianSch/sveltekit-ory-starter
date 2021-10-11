@@ -15,7 +15,7 @@ export type AuthFlowType =
 	| SelfServiceSettingsFlow
 	| SelfServiceVerificationFlow;
 
-export type KratosFlowType =
+export type FlowTypeId =
 	| 'registration'
 	| 'login'
 	| 'settings'
@@ -23,8 +23,22 @@ export type KratosFlowType =
 	| 'recovery'
 	| 'error';
 
-export const publicAuthApi = new V0alpha1Api(
-	new Configuration({
-		basePath: config.auth.publicURL as string
-	})
+export interface UserSession {
+	user: {
+		id: string;
+		email: string;
+	};
+}
+
+export const authFlowTypeMap = {
+	registration: 'getSelfServiceRegistrationFlow',
+	recovery: 'getSelfServiceRecoveryFlow',
+	verification: 'getSelfServiceVerificationFlow',
+	settings: 'getSelfServiceSettingsFlow',
+	error: 'getSelfServiceError',
+	login: 'getSelfServiceLoginFlow'
+};
+
+export const authApi = new V0alpha1Api(
+	new Configuration({ basePath: config.auth.publicURL as string })
 );
