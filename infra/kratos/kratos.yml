@@ -17,6 +17,7 @@ serve:
       allowed_headers:
         - Authorization
         - Cookie
+        - Content-Type
       exposed_headers:
         - Content-Type
         - Set-Cookie
@@ -90,7 +91,7 @@ selfservice:
 
     registration:
       lifespan: 10m
-      ui_url: http://127.0.0.1:3000/auth/registration
+      ui_url: http://127.0.0.1:3000/auth/register
       after:
         password:
           hooks:
