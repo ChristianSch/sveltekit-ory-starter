@@ -44,6 +44,7 @@ services:
       - type: bind
         source: ./infra/kratos
         target: /etc/config/kratos
+    # do not use --dev in production
     command: serve -c /etc/config/kratos/kratos.yml --dev --watch-courier
     restart: unless-stopped
     networks:

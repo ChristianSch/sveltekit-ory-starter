@@ -13,28 +13,29 @@
   "devDependencies": {
     "@ory/kratos-client": "^0.7.6-alpha.7",
     "@sveltejs/kit": "next",
-    "@typescript-eslint/eslint-plugin": "^4.19.0",
-    "@typescript-eslint/parser": "^4.19.0",
-    "autoprefixer": "^10.3.1",
-    "cssnano": "^5.0.6",
-    "eslint": "^7.22.0",
-    "eslint-config-prettier": "^8.1.0",
+    "@tsconfig/svelte": "^2.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "autoprefixer": "^10.3.7",
+    "cssnano": "^5.0.8",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.24.2",
-    "eslint-plugin-svelte3": "^3.2.0",
-    "postcss": "^8.3.5",
+    "eslint-plugin-svelte3": "^3.2.1",
+    "postcss": "^8.3.9",
     "postcss-load-config": "^3.1.0",
-    "prettier": "~2.2.1",
-    "prettier-plugin-svelte": "^2.2.0",
-    "svelte": "^3.34.0",
-    "svelte-check": "^2.0.0",
-    "svelte-preprocess": "^4.7.4",
-    "tailwindcss": "^2.2.4",
-    "tslib": "^2.0.0",
-    "typescript": "^4.0.0"
+    "prettier": "~2.4.1",
+    "prettier-plugin-svelte": "^2.4.0",
+    "svelte": "^3.43.2",
+    "svelte-check": "^2.2.7",
+    "svelte-preprocess": "^4.9.8",
+    "tailwindcss": "^2.2.16",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.4"
   },
   "engines": {
-    "node": ">=14.18"
+    "node": ">=14"
   },
   "type": "module"
 }
