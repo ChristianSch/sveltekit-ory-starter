@@ -2,7 +2,7 @@
 	import type { UiContainer, UiNodeInputAttributes } from '@ory/kratos-client';
 	export let label: string;
 	export let authUi: UiContainer;
-	export let onSubmit: (fields) => void = null;
+	export let onSubmit: () => void;
 
 	/*
     Populates an object for every node that was returned by Ory Kratos and sets
@@ -16,8 +16,11 @@
 	}, {});
 
 	const submit = (event) => {
-		event.preventDefault();
-		if (onSubmit) onSubmit(fields);
+		// if (onSubmit) onSubmit(fields);
+		let valid = true;
+		// do form validation based on your preferences/business requirements
+		if (onSubmit) onSubmit();
+		if (!valid) event.preventDefault();
 	};
 </script>
 

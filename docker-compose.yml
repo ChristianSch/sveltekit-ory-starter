@@ -59,6 +59,7 @@ services:
       - intranet
     depends_on:
       - db
+      - kratos
 
 networks:
   intranet:
