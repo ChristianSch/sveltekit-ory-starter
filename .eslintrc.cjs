@@ -16,16 +16,5 @@ module.exports = {
 		browser: true,
 		es2017: true,
 		node: true
-	},
-	settings: {
-		'import/resolver': {
-			alias: {
-				map: [
-					['$lib', './src/lib'],
-					['@', './src']
-				],
-				extensions: ['.ts', '.js', '.jsx', '.json']
-			}
-		}
 	}
 };

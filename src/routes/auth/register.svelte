@@ -4,11 +4,11 @@
 </script>
 
 <script lang="ts">
-	import type { UiContainer } from '@ory/kratos-client';
 	import AuthForm from '$lib/components/AuthForm.svelte';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { authApi } from '$lib/auth';
+	import type { UiContainer } from '@ory/kratos-client';
 
 	export let authUi: UiContainer;
 
