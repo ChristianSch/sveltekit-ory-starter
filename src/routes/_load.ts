@@ -1,17 +1,16 @@
 import type { Load } from '@sveltejs/kit';
-import type { UserSession } from '$lib/auth';
 
-export const load: Load = async ({ session }: { session: UserSession }) => {
-	if (session.user) {
-		return {
-			props: {
-				session
-			}
-		};
-	}
+export const load: Load = async ({ session, fetch }) => {
+	if (!session.user) return {};
 
+	const result = await fetch(`/api/auth/logout`, {
+		credentials: 'include'
+	});
+
+	const { data } = await result.json();
 	return {
-		status: 302,
-		redirect: '/auth/login'
+		props: {
+			logoutUrl: data.logout_url
+		}
 	};
 };

@@ -40,5 +40,5 @@ export const authFlowTypeMap = {
 };
 
 export const authApi = new V0alpha1Api(
-	new Configuration({ basePath: config.auth.publicURL as string })
+	new Configuration({ basePath: config.auth.publicUrl as string })
 );

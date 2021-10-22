@@ -23,7 +23,7 @@ export const handle: Handle = async ({ request, resolve }) => {
 			headers: {
 				Authorization: `${request.headers.authorization}`,
 				Cookie: `${request.headers.cookie}`,
-				Origin: config.auth.publicURL
+				Origin: config.auth.publicUrl
 			},
 			credentials: 'include'
 		});

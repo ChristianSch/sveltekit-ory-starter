@@ -5,9 +5,6 @@
 
 <script lang="ts">
 	import AuthForm from '$lib/components/AuthForm.svelte';
-	import { page, session } from '$app/stores';
-	import { goto } from '$app/navigation';
-	import { authApi } from '$lib/auth';
 	import type { UiContainer } from '@ory/kratos-client';
 
 	export let authUi: UiContainer;

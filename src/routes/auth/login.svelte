@@ -9,6 +9,8 @@
 
 	export let authUi: UiContainer;
 
+	$: ui = authUi;
+
 	const login = () => {
 		//
 	};
@@ -17,4 +19,4 @@
 
 <h1>This is the login page!</h1>
 
-<AuthForm onSubmit={login} label="Login" {authUi} />
+<AuthForm label="Log in" onSubmit={login} authUi={ui} />

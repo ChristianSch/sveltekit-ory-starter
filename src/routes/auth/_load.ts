@@ -14,7 +14,7 @@ export const createLoad =
 		if (!res.ok) {
 			return {
 				status: 302,
-				redirect: `${config.auth.publicURL}/self-service/${flowType}/browser`
+				redirect: `${config.auth.publicUrl}/self-service/${flowType}/browser`
 			};
 		}
 

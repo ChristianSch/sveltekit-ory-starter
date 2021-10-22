@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { UiContainer, UiNodeInputAttributes } from '@ory/kratos-client';
-	export let label: string;
 	export let authUi: UiContainer;
+	export let label: string;
 	export let onSubmit: () => void;
 
 	/*
@@ -34,6 +34,7 @@
 	method={authUi.method}
 	enctype="application/x-www-form-urlencoded"
 	on:submit={submit}
+	{...$$restProps}
 >
 	{#each authUi.nodes as { messages, attributes }}
 		{#if 'name' in attributes}
@@ -43,7 +44,7 @@
 					<input
 						bind:value={fields[attributes.name]}
 						type="email"
-						name="email"
+						name={attributes.name}
 						id="email"
 						placeholder="example@domain.com"
 					/>
@@ -60,7 +61,13 @@
 				{#if attributes.name === 'csrf_token'}
 					<input bind:value={fields[attributes.name]} type="hidden" name={attributes.name} />
 				{/if}
+				{#if attributes.name === 'csrf_token'}
+					<input bind:value={fields[attributes.name]} type="hidden" name={attributes.name} />
+				{/if}
 			</div>
+			{#if attributes.type === 'submit'}
+				<button type="submit" name={attributes.name} value={attributes.value}>{label}</button>
+			{/if}
 		{/if}
 		{#if messages && messages.length > 0}
 			{#each messages as { text, type }}
@@ -73,7 +80,6 @@
 			{text}
 		{/each}
 	{/if}
-	<input type="submit" value={label} />
 </form>
 
 <style>
