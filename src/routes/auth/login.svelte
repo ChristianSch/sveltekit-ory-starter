@@ -20,3 +20,5 @@
 <h1>This is the login page!</h1>
 
 <AuthForm label="Log in" onSubmit={login} authUi={ui} />
+
+<p>Don't have an account? <a href="/auth/register">Register</a></p>
