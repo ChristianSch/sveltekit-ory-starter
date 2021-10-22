@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
 	import { createLoad } from './_load';
-	export const load = createLoad('login');
+	export const load = createLoad('recovery');
 </script>
 
 <script lang="ts">
@@ -12,8 +12,6 @@
 	$: ui = authUi;
 </script>
 
-<h1>This is the login page!</h1>
+<h1>Reset your password</h1>
 
-<AuthForm label="Log in" authUi={ui} />
-<p>Forgot password? <a href="/auth/reset-password">Reset it</a></p>
-<p>Don't have an account? <a href="/auth/register">Register</a></p>
+<AuthForm label="Reset password" authUi={ui} />
