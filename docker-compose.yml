@@ -57,9 +57,6 @@ services:
       - '4437:4437'
     networks:
       - intranet
-    depends_on:
-      - db
-      - kratos
 
 networks:
   intranet:
