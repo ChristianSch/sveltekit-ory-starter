@@ -4,18 +4,17 @@ import { authApi } from '$lib/auth';
 import { config } from '$lib/constants';
 import type { GetSession, Handle } from '@sveltejs/kit/types/hooks';
 
-export const getSession: GetSession = (request) => {
-	/*
-    this session object is exposed to users
-    only include properties needed on the client, like email and name — no token stuff
-  */
-	return {
-		user: request.locals.session && {
-			id: request.locals.session.identity.id,
-			email: request.locals.session?.identity?.traits.email
-		}
-	};
-};
+/*
+  this session object is exposed to users
+  only include properties needed on the client, like email and name — no token stuff
+*/
+export const getSession: GetSession = (request) => ({
+	user: request.locals.session && {
+		id: request.locals.session.identity.id,
+		email: request.locals.session?.identity?.traits.email,
+		verified: request.locals.session?.identity?.verifiable_addresses[0].verified || false
+	}
+});
 
 export const handle: Handle = async ({ request, resolve }) => {
 	try {
