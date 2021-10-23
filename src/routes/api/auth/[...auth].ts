@@ -1,15 +1,15 @@
-import { authApi, authFlowTypeMap } from '$lib/auth';
+import { authApi, authFlowMap } from '$lib/auth';
 import type { Request } from '@sveltejs/kit';
 import type {
 	SelfServiceError,
 	SelfServiceRegistrationFlow,
 	SelfServiceVerificationFlow
 } from '@ory/kratos-client';
-import type { AuthFlowType } from '$lib/auth';
+import type { TAuthFlow } from '$lib/auth';
 
 interface AuthFlowResponse {
 	status: number;
-	data: AuthFlowType | SelfServiceError;
+	data: TAuthFlow | SelfServiceError;
 }
 
 interface GetResponse {
@@ -27,11 +27,17 @@ export const get = async (req: Request): Promise<GetResponse> => {
 	const error = req.headers.error;
 	const flowType = req.params.auth;
 	const cookies = req.headers.cookie;
-
 	const flowParam = flowType === 'error' ? error : flowId;
 	try {
-		const authFlow = authFlowTypeMap[flowType];
-		const { status, data }: AuthFlowResponse = await authApi[authFlow](flowParam, cookies);
+		const authFlow = authFlowMap[flowType];
+
+		// For some reason, the settings flow has a unique function signature
+		const promise =
+			authFlow === authFlowMap.settings
+				? authApi[authFlow](flowParam, null, cookies)
+				: authApi[authFlow](flowParam, cookies);
+
+		const { status, data }: AuthFlowResponse = await promise;
 
 		return {
 			body: { data },
@@ -41,6 +47,6 @@ export const get = async (req: Request): Promise<GetResponse> => {
 			}
 		};
 	} catch (err) {
-		if (err.response) console.error(err.response.data.error);
+		if (err.response && err.response.data) console.error(err.response.data.error);
 	}
 };

@@ -18,7 +18,6 @@ export const createInitiator = (method: string) => {
 
 		try {
 			const response = await authApi[method](cookies);
-
 			return {
 				body: {
 					data: response.data
@@ -29,7 +28,6 @@ export const createInitiator = (method: string) => {
 				status: response.status
 			};
 		} catch (err) {
-			console.log(err);
 			return {
 				status: err.response.data.error.code,
 				headers: {

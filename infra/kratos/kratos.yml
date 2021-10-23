@@ -73,7 +73,7 @@ selfservice:
 
     recovery:
       enabled: true
-      ui_url: http://127.0.0.1:3000/auth/recovery
+      ui_url: http://127.0.0.1:3000/auth/reset-password
 
     verification:
       enabled: true

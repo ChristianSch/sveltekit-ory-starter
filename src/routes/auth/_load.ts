@@ -1,6 +1,6 @@
 import { config } from '$lib/constants';
 import type { Load } from '@sveltejs/kit';
-import type { AuthFlowType, FlowTypeId } from '$lib/auth';
+import type { TAuthFlow, FlowTypeId } from '$lib/auth';
 
 export const createLoad =
 	(flowType: FlowTypeId): Load =>
@@ -18,7 +18,7 @@ export const createLoad =
 			};
 		}
 
-		const { data: flow }: { status: number; data: AuthFlowType } = await res.json();
+		const { data: flow }: { status: number; data: TAuthFlow } = await res.json();
 
 		return {
 			props: { authUi: flow.ui }

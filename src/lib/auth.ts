@@ -8,7 +8,7 @@ import type {
 } from '@ory/kratos-client';
 import { config } from './constants';
 
-export type AuthFlowType =
+export type TAuthFlow =
 	| SelfServiceLoginFlow
 	| SelfServiceRegistrationFlow
 	| SelfServiceRecoveryFlow
@@ -30,7 +30,7 @@ export interface UserSession {
 	};
 }
 
-export const authFlowTypeMap = {
+export const authFlowMap = {
 	registration: 'getSelfServiceRegistrationFlow',
 	recovery: 'getSelfServiceRecoveryFlow',
 	verification: 'getSelfServiceVerificationFlow',

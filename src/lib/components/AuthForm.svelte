@@ -2,7 +2,7 @@
 	import type { UiContainer, UiNodeInputAttributes } from '@ory/kratos-client';
 	export let authUi: UiContainer;
 	export let label: string;
-	export let onSubmit: () => void;
+	export let onSubmit: () => void = null;
 
 	/*
     Populates an object for every node that was returned by Ory Kratos and sets
@@ -39,7 +39,7 @@
 	{#each authUi.nodes as { messages, attributes }}
 		{#if 'name' in attributes}
 			<div>
-				{#if attributes.name === 'password_identifier' || attributes.name === 'traits.email'}
+				{#if attributes.type === 'email' || attributes.name === 'password_identifier' || attributes.name === 'traits.email'}
 					<label for="email">Email</label>
 					<input
 						bind:value={fields[attributes.name]}
