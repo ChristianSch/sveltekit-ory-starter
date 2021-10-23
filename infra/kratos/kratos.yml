@@ -33,35 +33,17 @@ selfservice:
   methods:
     password:
       enabled: true
-    # oidc:
-    #   enabled: true
-    #   config:
-    #     providers:
-    #       - id: google
-    #         provider: google
-    #         client_id: INSERT GOOGLE ID HERE
-    #         client_secret: INSERT GOOGLE SECRET HERE
-    #         mapper_url: file:///etc/config/kratos/oidc/oidc.google.jsonnet
-    #         scope:
-    #           - profile
-    #           - email
-    #           - openid
-    #         requested_claims:
-    #           id_token:
-    #             email:
-    #               essential: true
-    #             email_verified:
-    #               essential: true
-    #             given_name:
-    #               essential: true
-    #             family_name: null
-    #       - id: facebook
-    #         provider: facebook
-    #         client_id: INSERT FACEBOOK ID HERE
-    #         client_secret: .INSERT FACEBOOK SECRET HERE
-    #         mapper_url: file:///etc/config/kratos/oidc/oidc.facebook.jsonnet
-    #         scope:
-    #           - email
+    oidc:
+      enabled: true
+      config:
+        providers:
+          - id: github
+            provider: github
+            client_id: ... # Add the client ID
+            client_secret: ... # Add the client secret
+            mapper_url: file:///etc/config/kratos/oidc.github.jsonnet
+            scope:
+              - user:email
 
   flows:
     error:
@@ -96,9 +78,9 @@ selfservice:
         password:
           hooks:
             - hook: session
-        # oidc:
-        #   hooks:
-        #     - hook: session
+        oidc:
+          hooks:
+             - hook: session
 
 log:
   # Don't use these settings in prod
