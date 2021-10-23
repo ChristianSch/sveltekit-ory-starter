@@ -67,7 +67,7 @@
 					<input bind:value={fields[attributes.name]} type="hidden" name={attributes.name} />
 				{/if}
 			</div>
-			{#if attributes.type === 'submit'}
+			{#if attributes.type === 'submit' && attributes.name !== 'provider'}
 				<button type="submit" name={attributes.name} value={attributes.value}>{label}</button>
 			{/if}
 		{/if}
