@@ -6,10 +6,9 @@
 
 <script lang="ts">
 	import { setContext } from 'svelte';
-	import '../app.postcss';
+	import '../app.css';
 
 	export let logoutUrl: string;
-
 	setContext('logoutUrl', logoutUrl);
 </script>
 
