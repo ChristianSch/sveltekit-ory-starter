@@ -22,6 +22,8 @@
 		if (onSubmit) onSubmit();
 		if (!valid) event.preventDefault();
 	};
+
+	$: socials = authUi ? authUi.nodes.filter((node) => node.group === 'oidc') : [];
 </script>
 
 <!--
@@ -81,6 +83,26 @@
 		{/each}
 	{/if}
 </form>
+
+{#if socials.length > 0}
+	or
+	<form action={authUi.action} method={authUi.method} enctype="application/x-www-form-urlencoded">
+		{#each socials as { attributes }}
+			<!--
+        You can add styling based on the provider by checking
+        `if (attributes.value === '<provider')`
+      -->
+			{#if 'name' in attributes}
+				<button type="submit" name={attributes.name} value={attributes.value}>
+					Sign in with
+					{#if attributes.value === 'github'}
+						GitHub
+					{/if}
+				</button>
+			{/if}
+		{/each}
+	</form>
+{/if}
 
 <style>
 	input {
