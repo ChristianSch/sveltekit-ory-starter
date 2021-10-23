@@ -8,7 +8,9 @@
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier  --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
-		"format": "prettier --write --plugin-search-dir=. ."
+		"format": "prettier --write --plugin-search-dir=. .",
+		"e2e": "cypress run --spec 'cypress/integration/*.ts'",
+		"e2e:browser": "cypress open"
 	},
 	"devDependencies": {
 		"@ory/kratos-client": "^0.7.6-alpha.7",

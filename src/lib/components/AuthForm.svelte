@@ -49,6 +49,7 @@
 						name={attributes.name}
 						id="email"
 						placeholder="example@domain.com"
+						data-testid="auth-email"
 					/>
 				{/if}
 				{#if attributes.name === 'password'}
@@ -58,17 +59,25 @@
 						type="password"
 						name="password"
 						id="password"
+						data-testid="auth-password"
 					/>
 				{/if}
 				{#if attributes.name === 'csrf_token'}
-					<input bind:value={fields[attributes.name]} type="hidden" name={attributes.name} />
-				{/if}
-				{#if attributes.name === 'csrf_token'}
-					<input bind:value={fields[attributes.name]} type="hidden" name={attributes.name} />
+					<input
+						data-testid="auth-csrf"
+						bind:value={fields[attributes.name]}
+						type="hidden"
+						name={attributes.name}
+					/>
 				{/if}
 			</div>
 			{#if attributes.type === 'submit' && attributes.name !== 'provider'}
-				<button type="submit" name={attributes.name} value={attributes.value}>{label}</button>
+				<button
+					data-testid="auth-submit"
+					type="submit"
+					name={attributes.name}
+					value={attributes.value}>{label}</button
+				>
 			{/if}
 		{/if}
 		{#if messages && messages.length > 0}
