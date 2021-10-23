@@ -7,6 +7,7 @@
 
 {#if $user}
 	<h1>You're logged in! {$user.email}</h1>
+	<a href="/settings">Account settings</a><br />
 	<a href={logoutUrl}>Log out</a>
 {:else}
 	<h1>You're not logged in</h1>

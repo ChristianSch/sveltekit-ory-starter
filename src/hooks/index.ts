@@ -43,8 +43,6 @@ export const handle: Handle = async ({ request, resolve }) => {
 			}
 		};
 	} catch (error) {
-		if (error.response.data.error.code === 401) {
-			return await resolve(request);
-		}
+		return await resolve(request);
 	}
 };

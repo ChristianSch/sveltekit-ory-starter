@@ -33,14 +33,36 @@
 </script>
 
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { user } from '$lib/stores/auth';
 	import AuthForm from '$lib/components/AuthForm.svelte';
 	import type { UiContainer } from '@ory/kratos-client';
 
 	export let authUi: UiContainer;
 
 	$: ui = authUi;
+
+	const deleteUser = async () => {
+		const isConfirmed = window.confirm('Are you sure you want to delete your account?');
+		if (!isConfirmed) return;
+
+		const res = await fetch('/api/auth/delete', {
+			method: 'DELETE',
+			credentials: 'include',
+			body: JSON.stringify({ userId: $user.id })
+		});
+
+		if (res.ok) {
+			// TODO: report success
+			await goto('/auth/login');
+		}
+
+		// TODO: handle error
+	};
 </script>
 
 <h1>Account settings</h1>
 
 <AuthForm label="Reset password" authUi={ui} />
+
+<button on:click={deleteUser}>Delete your account</button>
