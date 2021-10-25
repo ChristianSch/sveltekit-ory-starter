@@ -16,19 +16,25 @@ describe('Login', () => {
 		cy.url().should('include', '?flow=');
 	});
 
-	it('has a fillable email field', () => {
+	it('should have a fillable email field', () => {
 		cy.getByTestId(LOGIN_FIELDS.email).type('foo').should('have.value', 'foo');
 	});
 
-	it('has a fillable password field', () => {
+	it('should have a fillable password field', () => {
 		cy.getByTestId(LOGIN_FIELDS.password).type('bar').should('have.value', 'bar');
 	});
 
-	it('has a login button with "Log in" text', () => {
+	it('should let the user toggle password visibility', () => {
+		cy.getByTestId(LOGIN_FIELDS.password_toggle).contains('Show');
+		cy.getByTestId(LOGIN_FIELDS.password_toggle).click();
+		cy.getByTestId(LOGIN_FIELDS.password_toggle).contains('Hide');
+	});
+
+	it('should have a login button with "Log in" text', () => {
 		cy.getByTestId(LOGIN_FIELDS.submit).contains('Log in');
 	});
 
-	it('logs in successfully if correct information is entered', () => {
+	it('should log in successfully if correct information is entered', () => {
 		cy.login(registrationData.email, registrationData.password);
 	});
 });

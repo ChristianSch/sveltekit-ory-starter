@@ -9,19 +9,19 @@ describe('Register', () => {
 		cy.url().should('include', '?flow=');
 	});
 
-	it('has a fillable email field', () => {
+	it('should have a fillable email field', () => {
 		cy.getByTestId(REGISTER_FIELDS.email).type('foo').should('have.value', 'foo');
 	});
 
-	it('has a fillable password field', () => {
+	it('should have a fillable password field', () => {
 		cy.getByTestId(REGISTER_FIELDS.password).type('bar').should('have.value', 'bar');
 	});
 
-	it('has a registration button with "Register" text', () => {
+	it('should have a registration button with "Register" text', () => {
 		cy.getByTestId(REGISTER_FIELDS.submit).contains('Register');
 	});
 
-	it('registers successfully when correct information is entered', () => {
+	it('should register successfully when correct information is entered', () => {
 		cy.register();
 	});
 });

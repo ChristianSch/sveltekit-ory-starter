@@ -14,7 +14,7 @@
 
 <h1>This is the register page!</h1>
 
-<AuthForm label="Register" authUi={ui} />
+<AuthForm label="Register" type="registration" authUi={ui} />
 <p>
 	Already have an account? <a href="/auth/login">Log in</a>
 </p>

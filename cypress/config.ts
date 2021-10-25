@@ -12,11 +12,13 @@ export const apiRoutes = {
 export enum LOGIN_FIELDS {
 	email = 'auth-email',
 	password = 'auth-password',
+	password_toggle = 'auth-password-toggle',
 	submit = 'auth-submit'
 }
 
 export enum REGISTER_FIELDS {
 	email = 'auth-email',
 	password = 'auth-password',
+	password_toggle = 'auth-password-toggle',
 	submit = 'auth-submit'
 }

@@ -1,9 +1,12 @@
 <script lang="ts">
 	import type { UiContainer, UiNodeInputAttributes } from '@ory/kratos-client';
+	import type { FlowTypeId } from '$lib/auth';
 	export let authUi: UiContainer;
 	export let label: string;
 	export let onSubmit: () => void = null;
+	export let type: FlowTypeId = null;
 
+	import { Eye, EyeOff } from '$lib/components/icon';
 	/*
     Populates an object for every node that was returned by Ory Kratos and sets
     its default value if there is one. Allows for easy serialization to submit via
@@ -23,6 +26,16 @@
 		if (!valid) event.preventDefault();
 	};
 
+	const updatePasswordValue = (e, fieldName: string) => {
+		fields[fieldName] = e.target.value;
+	};
+
+	let passwordFields = {};
+	const togglePassword = (id: number) => {
+		// basic true/false toggle for this field
+		passwordFields[id] = !passwordFields[id];
+	};
+
 	$: socials = authUi ? authUi.nodes.filter((node) => node.group === 'oidc') : [];
 </script>
 
@@ -38,7 +51,7 @@
 	on:submit={submit}
 	{...$$restProps}
 >
-	{#each authUi.nodes as { messages, attributes }}
+	{#each authUi.nodes as { messages, attributes }, i}
 		{#if 'name' in attributes}
 			<div>
 				{#if attributes.type === 'email' || attributes.name === 'password_identifier' || attributes.name === 'traits.email'}
@@ -54,13 +67,34 @@
 				{/if}
 				{#if attributes.name === 'password'}
 					<label for="password">Password</label>
-					<input
-						bind:value={fields[attributes.name]}
-						type="password"
-						name="password"
-						id="password"
-						data-testid="auth-password"
-					/>
+					<div class="input-container">
+						<button
+							class="toggle-password"
+							type="button"
+							on:click={() => togglePassword(i)}
+							aria-label={passwordFields[i]
+								? 'Show password as plain text. Warning: this will display your password on the screen.'
+								: 'Hide password'}
+							data-testid="auth-password-toggle"
+						>
+							{#if passwordFields[i]}
+								<i aria-hidden="true"><Eye /></i> Show
+							{:else}
+								<i aria-hidden="true"><EyeOff /></i> Hide
+							{/if}
+						</button>
+						<!-- Cannot use two-way binding here because input type is dynamic -->
+						<input
+							value={fields[attributes.name]}
+							on:input={(e) => updatePasswordValue(e, attributes.name)}
+							bind:this={passwordFields[i]}
+							type={passwordFields[i] ? 'password' : 'text'}
+							name="password"
+							id="password"
+							data-testid="auth-password"
+							autocomplete={type === 'registration' ? 'new-password' : 'current-password'}
+						/>
+					</div>
 				{/if}
 				{#if attributes.name === 'csrf_token'}
 					<input
@@ -116,5 +150,31 @@
 <style>
 	input {
 		border: 1px solid #000;
+		padding: 5px 8px;
+	}
+
+	.input-container {
+		position: relative;
+		display: inline-block;
+	}
+
+	.toggle-password {
+		background: none;
+		border: none;
+		cursor: pointer;
+		font-weight: 300;
+		position: absolute;
+		height: 24px;
+		top: calc(50% - 12px);
+		right: 2px;
+		padding: 5px 5px 5px 10px;
+		line-height: 16px;
+		display: flex;
+		align-items: center;
+		background: #fff;
+	}
+
+	.toggle-password > i {
+		margin-right: 4px;
 	}
 </style>
