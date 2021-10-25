@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 import faker from 'faker';
 import { REGISTER_FIELDS, LOGIN_FIELDS } from '../config';
 
