@@ -56,7 +56,7 @@ Either clone the repository or run
 npx degit MicLeey/sveltekit-ory-starter
 ```
 
-Copy `.env.example` to `.env` and secrets as needed. **Don't use the dev settings in production**.
+Copy `.env.example` to `.env` and update secrets as needed. **Don't use the dev settings in production**.
 ```bash
 cp .env.example .env
 ```
