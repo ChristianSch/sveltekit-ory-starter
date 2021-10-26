@@ -68,6 +68,17 @@
 				{#if attributes.name === 'password'}
 					<label for="password">Password</label>
 					<div class="input-container">
+						<!-- Cannot use two-way binding here because input type is dynamic -->
+						<input
+							value={fields[attributes.name]}
+							on:input={(e) => updatePasswordValue(e, attributes.name)}
+							bind:this={passwordFields[i]}
+							type={passwordFields[i] ? 'password' : 'text'}
+							name="password"
+							id="password"
+							data-testid="auth-password"
+							autocomplete={type === 'registration' ? 'new-password' : 'current-password'}
+						/>
 						<button
 							class="toggle-password"
 							type="button"
@@ -83,17 +94,6 @@
 								<i aria-hidden="true"><EyeOff /></i> Hide
 							{/if}
 						</button>
-						<!-- Cannot use two-way binding here because input type is dynamic -->
-						<input
-							value={fields[attributes.name]}
-							on:input={(e) => updatePasswordValue(e, attributes.name)}
-							bind:this={passwordFields[i]}
-							type={passwordFields[i] ? 'password' : 'text'}
-							name="password"
-							id="password"
-							data-testid="auth-password"
-							autocomplete={type === 'registration' ? 'new-password' : 'current-password'}
-						/>
 					</div>
 				{/if}
 				{#if attributes.name === 'csrf_token'}
