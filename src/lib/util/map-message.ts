@@ -54,17 +54,20 @@ export enum AuthMessage {
 }
 
 const messageMap: { [key: MessageId]: string } = {
-	[AuthMessage.BAD_LENGTH_SUPPLIED]: '{field} should be at least {requiredLength} characters',
+	[AuthMessage.BAD_LENGTH_SUPPLIED]:
+		'{field} should be at least {expected_length} characters (currently {actual_length})',
 	[AuthMessage.INVALID_CREDENTIALS_SUPPLIED]: 'The password or email you entered was incorrect'
 };
 
 // Interpolators are key-value pairs required to construct the custom message
 // For message '{field} should be at least {requiredLength} characters'
 // The interpolator would be { field: 'email', requiredLength: 5 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Interpolators = { [key: string]: any };
 export const getCustomMessage = (id: MessageId, interpolators?: Interpolators) => {
 	const message = messageMap[id];
 
+	if (!message) return null;
 	if (!interpolators) return message;
 
 	const pattern = Object.keys(interpolators)
@@ -86,9 +89,12 @@ export const getMessageWithId = (id: MessageId, interpolators?: Interpolators) =
 type BaseMessage = {
 	id: MessageId;
 	text: string;
-	type: 'info' | 'error';
-	context: Interpolators;
+	type?: string;
+	context?: Interpolators;
 };
-export const getMessage = (message: BaseMessage, additionalInterpolators: Interpolators) => {
-	return getCustomMessage(message.id, { ...message.context, ...additionalInterpolators });
+export const getMessage = (message: BaseMessage, additionalInterpolators: Interpolators = {}) => {
+	const interpolators = message.context
+		? { ...message.context, ...additionalInterpolators }
+		: { ...additionalInterpolators };
+	return getCustomMessage(message.id, interpolators) || message.text;
 };
