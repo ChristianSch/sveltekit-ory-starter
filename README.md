@@ -47,22 +47,28 @@ This template comes with almost no styling, and that is by design. It's meant to
 
 
 
-## Usage 
+## Usage
 
 You will need [Node](https://nodejs.org/en/) version >= 14 and [Docker](https://www.docker.com/) installed to your system.
 
 Either clone the repository or run
-```
+```bash
 npx degit MicLeey/sveltekit-ory-starter
 ```
 
-Run containers
+Copy `.env.example` to `.env` and secrets as needed. **Don't use the dev settings in production**.
+```bash
+cp .env.example .env
 ```
+
+
+Run containers
+```bash
 docker-compose up --build
 ```
 
 Install dependencies and run the Svelte Kit app
-```
+```bash
 npm install
 npm run dev
 ```
