@@ -176,5 +176,12 @@
 
 	.toggle-password > i {
 		margin-right: 4px;
+		width: 18px;
+		height: 18px;
+	}
+
+	.toggle-password > i :global(svg) {
+		height: 100%;
+		width: 100%;
 	}
 </style>
