@@ -5,8 +5,8 @@
 	export let label: string;
 	export let onSubmit: () => void = null;
 	export let type: FlowTypeId = null;
-
 	import { Eye, EyeOff } from '$lib/components/icon';
+	import { getMessage } from '$lib/util';
 	/*
     Populates an object for every node that was returned by Ory Kratos and sets
     its default value if there is one. Allows for easy serialization to submit via
@@ -37,6 +37,12 @@
 	};
 
 	$: socials = authUi ? authUi.nodes.filter((node) => node.group === 'oidc') : [];
+	$: formErrors = authUi.messages
+		? authUi.messages.filter((m) => m.type === 'error').map((e) => getMessage(e))
+		: [];
+	$: formInfo = authUi.messages
+		? authUi.messages.filter((m) => m.type === 'info').map((e) => getMessage(e))
+		: [];
 </script>
 
 <!--
@@ -114,15 +120,22 @@
 				>
 			{/if}
 		{/if}
+		<!-- Field errors -->
 		{#if messages && messages.length > 0}
-			{#each messages as { text, type }}
-				{text}
+			{#each messages.map((m) => getMessage(m)) as message}
+				{message}
 			{/each}
 		{/if}
 	{/each}
-	{#if authUi.messages && authUi.messages.length > 0}
-		{#each authUi.messages as { text, type }}
-			{text}
+	{#if formErrors && formErrors.length > 0}
+		{#each formErrors as error}
+			<p>{error}</p>
+		{/each}
+	{/if}
+	<!-- Info -->
+	{#if formInfo && formInfo.length > 0}
+		{#each formInfo as info}
+			<p>{info}</p>
 		{/each}
 	{/if}
 </form>
