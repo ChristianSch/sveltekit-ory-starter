@@ -38,6 +38,19 @@ const login = (email: string, password: string) => {
 };
 Cypress.Commands.add('login', login);
 
+/*
+	During some flows (such as settings) and under certain conditions, Ory Kratos
+	will require identity verification by asking the user to re-enter their password.
+	We don't control those conditions, and they are well-tested on Kratos' end.
+	This helper will verify the identity if required by Kratos
+*/
+const verifyIdentity = (password: string) => {
+	cy.contains("Please confirm this action by verifying that it's you.");
+	cy.getByTestId(LOGIN_FIELDS.password).type(password);
+	cy.getByTestId(LOGIN_FIELDS.submit).click();
+};
+Cypress.Commands.add('verifyIdentity', verifyIdentity);
+
 const getEmails = () => {
 	return cy.request(`${apiRoutes.mail}/mail`).then((response) => {
 		expect(response.body).to.have.property('mailItems');
@@ -83,6 +96,7 @@ declare global {
 			logout: typeof logout;
 			getEmails: typeof getEmails;
 			waitForEmail: typeof waitForEmail;
+			verifyIdentity: typeof verifyIdentity;
 		}
 	}
 }

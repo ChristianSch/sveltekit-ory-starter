@@ -28,3 +28,11 @@ export enum RESET_PASSWORD_FIELDS {
 	email = 'auth-email',
 	submit = 'auth-submit'
 }
+
+export enum SETTINGS_FIELDS {
+	email = 'settings-email',
+	email_submit = 'settings-email-submit',
+	password = 'settings-password',
+	password_submit = 'settings-password-submit',
+	delete_account = 'settings-delete-account'
+}
