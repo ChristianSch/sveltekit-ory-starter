@@ -1,12 +1,11 @@
 <h1 align="center">A starter for Svelte Kit and the Ory Stack 🚀</h1>
 
-
-
-**🚧 Work in progress 🚧**
-
 This project aims to be a "living", continuously maintained starting template and example of best practices for a modern web app built with [Svelte Kit](https://kit.svelte.dev/), secured using [Ory's open source libraries](https://github.com/ory). For now it only implements Kratos, but I will likely make branches to integrate with Oathkeeper and Keto as well.
 
 Note that neither Svelte Kit or Ory Kratos are in version 1, and their APIs are subject to frequent change. This template attempts to shadow both libraries' latest versions.
+
+- Current Svelte Kit version: **1.0.0-next.192**
+- Current Ory Kratos version: **0.7.6-alpha.1**
 
 ## Why
 
@@ -30,7 +29,7 @@ to clean up any associated user data your app may have stored.
 - [x] Social login/OpenID Connect (example is GitHub login)
 - [x] Everything server-side rendered
 - [x] No runtime dependencies that are not required for Svelte Kit & Kratos
-- [ ] All flows end-to-end tested with Cypress - with utils like faker data generators, `cy.login` and `cy.register` for you to build upon.
+- [x] All flows end-to-end tested with Cypress - with utils like faker data generators, `cy.login` and `cy.register` for you to build upon.
 - [x] Unit testing setup with Jest and [Svelte Testing Library](https://testing-library.com/docs/svelte-testing-library/intro/)
 - [x] Client-side validation and added UX where it makes sense (e.g. "show password" button). Some UX patterns you might think are a good idea are purposefully left out - see [password policy best practices](https://www.ory.sh/kratos/docs/concepts/security/#password-policy-best-practices)
 - [x]  Customizable auth messages and errors via [message mapping](https://github.com/MicLeey/sveltekit-ory-starter/blob/main/src/lib/util/map-message.ts), for client/server message consistency, tone of voice, and i18n
@@ -91,10 +90,3 @@ No, at the time of writing [Ory is still looking into how to make this work well
 
 #### What about SEO, i18n, image optimization, ...?
 This repository aims to solve authentication, and to stay as lean and simple to understand as possible. Not everyone needs the above in their application. A big advantage of using Svelte Kit is that they should be relatively easy to add yourself, especially through some of the community's excellent open source libraries.
-
-
-
-
-
-
-
