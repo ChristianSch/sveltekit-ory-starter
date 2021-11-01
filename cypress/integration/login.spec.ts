@@ -9,18 +9,11 @@ describe('Login', () => {
 	});
 
 	beforeEach(() => {
-		cy.visit('/auth/login');
-	});
-
-	it('should follow redirects and have an active flow after', () => {
-		cy.url().should('include', '?flow=');
+		cy.visit('/auth/login').url().should('include', '?flow=');
 	});
 
 	it('should have a fillable email field', () => {
-		cy.getByTestId(LOGIN_FIELDS.email)
-			.should('not.be.disabled')
-			.type('foo', { force: true })
-			.should('have.value', 'foo');
+		cy.getByTestId(LOGIN_FIELDS.email).type('foo').should('have.value', 'foo');
 	});
 
 	it('should have a fillable password field', () => {

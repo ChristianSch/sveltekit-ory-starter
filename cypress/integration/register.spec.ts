@@ -4,18 +4,11 @@ import type { Email } from '../utils';
 
 describe('Register', () => {
 	beforeEach(() => {
-		cy.visit('/auth/register');
-	});
-
-	it('should follow redirects and have an active flow after', () => {
-		cy.url().should('include', '?flow=');
+		cy.visit('/auth/register').url().should('include', '?flow=');
 	});
 
 	it('should have a fillable email field', () => {
-		cy.getByTestId(REGISTER_FIELDS.email)
-			.should('not.be.disabled')
-			.type('foo', { force: true })
-			.should('have.value', 'foo');
+		cy.getByTestId(REGISTER_FIELDS.email).type('foo').should('have.value', 'foo');
 	});
 
 	it('should have a fillable password field', () => {

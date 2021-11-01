@@ -2,20 +2,14 @@ import { RESET_PASSWORD_FIELDS } from '../config';
 import { generate, urlWithExactPath } from '../utils';
 import type { Email } from '../utils';
 
-describe('Reset password', () => {
+describe('Recover account', () => {
 	beforeEach(() => {
 		cy.visit('/auth/reset-password');
-	});
-
-	it('should follow redirects and have an active flow after', () => {
 		cy.url().should('include', '?flow=');
 	});
 
 	it('should have a fillable email field', () => {
-		cy.getByTestId(RESET_PASSWORD_FIELDS.email)
-			.should('not.be.disabled')
-			.type('foo', { force: true })
-			.should('have.value', 'foo');
+		cy.getByTestId(RESET_PASSWORD_FIELDS.email).type('foo').should('have.value', 'foo');
 	});
 
 	it('should have a reset button with "Reset password" text', () => {
@@ -27,10 +21,9 @@ describe('Reset password', () => {
 		cy.register(email, password);
 		cy.logout();
 		cy.visit('/auth/reset-password');
-		cy.getByTestId(RESET_PASSWORD_FIELDS.email)
-			.should('not.be.disabled')
-			.type(email, { force: true });
+		cy.getByTestId(RESET_PASSWORD_FIELDS.email).type(email);
 		cy.getByTestId(RESET_PASSWORD_FIELDS.submit).click();
+
 		const mailCriteria = (mail: Email) =>
 			mail.subject.includes('Recover access to your account') && mail.toAddresses.includes(email);
 		cy.waitForEmail(mailCriteria).then((resetEmail: Email) => {
