@@ -34,7 +34,7 @@ export const createInitiator = (method: string) => {
 					'Content-Type': 'application/json'
 				},
 				body: {
-					data: `Could not get logout URL: ${err.response.data.error.message}`
+					data: `Could not initiate flow: ${err.response.data.error.message}`
 				}
 			};
 		}

@@ -1,8 +1,10 @@
 <script lang="ts" context="module">
-	import PasswordField from '$lib/components/PasswordFieldWithVisibilityToggle.svelte';
+	import { canAccess, loginRedirect } from '$lib/util';
 	import type { Load } from '@sveltejs/kit';
 
-	export const load: Load = async ({ fetch }) => {
+	export const load: Load = async ({ page, session, fetch }) => {
+		if (!canAccess({ page, session })) return loginRedirect;
+
 		const settingsFlowResult = await fetch(`/api/auth/initiate-settings`, {
 			credentials: 'include'
 		});
@@ -22,6 +24,7 @@
 	import { goto } from '$app/navigation';
 	import { user } from '$lib/stores/auth';
 	import { getMessage } from '$lib/util';
+	import PasswordField from '$lib/components/PasswordFieldWithVisibilityToggle.svelte';
 	import type { UiContainer, UiNodeInputAttributes } from '@ory/kratos-client';
 
 	export let authUi: UiContainer;
@@ -36,7 +39,6 @@
 	}, {});
 
 	$: ui = authUi;
-
 	const updatePasswordValue = (e) => {
 		fields['password'].value = e.target.value;
 	};
@@ -68,7 +70,7 @@
 	<div>
 		<input bind:value={fields['csrf_token'].value} type="hidden" name="csrf_token" />
 
-		<label for="email">Email</label>
+		<label for="email">Change your email</label>
 		<input
 			bind:value={fields['traits.email'].value}
 			type="email"
@@ -96,7 +98,7 @@
 			value={fields['password'].value}
 			name="password"
 			id="password"
-			data-testid="settings-password"
+			testId="settings-password"
 		/>
 		<button type="submit" name="method" value="password" data-testid="settings-password-submit">
 			Change password

@@ -1,4 +1,4 @@
-import { authApi } from '$lib/auth';
+import { authAdminApi } from '$lib/auth';
 
 /*
  Note that while user deletion is implemented as a Svelte Kit endpoint here,
@@ -9,7 +9,7 @@ export const del = async (request: Request) => {
 	const { userId } = JSON.parse(request.body as unknown as string);
 
 	// Make sure no shenanigans are going on
-	const { data } = await authApi.adminGetIdentity(userId);
+	const { data } = await authAdminApi.adminGetIdentity(userId);
 	if (userId !== data.id) {
 		return {
 			status: 404,
@@ -19,9 +19,14 @@ export const del = async (request: Request) => {
 		};
 	}
 
-	await authApi.adminDeleteIdentity(userId);
-	return {
-		status: 204,
-		body: { id: userId }
-	};
+	try {
+		await authAdminApi.adminDeleteIdentity(userId);
+		return {
+			status: 204,
+			body: { id: userId }
+		};
+	} catch (err) {
+		// TODO: handle
+		console.log(err);
+	}
 };
