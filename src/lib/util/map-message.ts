@@ -68,7 +68,7 @@ export const getCustomMessage = (id: MessageId, interpolators?: Interpolators) =
 	const message = messageMap[id];
 
 	if (!message) return null;
-	if (!interpolators) return message;
+	if (!interpolators || Object.keys(interpolators).length === 0) return message;
 
 	const pattern = Object.keys(interpolators)
 		.map((k) => `{${k}}`)

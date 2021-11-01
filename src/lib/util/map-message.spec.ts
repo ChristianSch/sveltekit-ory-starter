@@ -14,7 +14,13 @@ describe('getCustomMessage', () => {
 		);
 	});
 
-	test('should return correct message if it does not need interpolation', () => {
+	test('should return correct message if an empty interpolation object is passed', () => {
+		const messageId = AuthMessage.INVALID_CREDENTIALS_SUPPLIED;
+		const message = getCustomMessage(messageId, {});
+		expect(message).toEqual('The password or email you entered was incorrect');
+	});
+
+	test('should return correct message if no interpolation object is passsed', () => {
 		const messageId = AuthMessage.INVALID_CREDENTIALS_SUPPLIED;
 		const message = getCustomMessage(messageId);
 		expect(message).toEqual('The password or email you entered was incorrect');
