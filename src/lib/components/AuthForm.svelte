@@ -73,6 +73,7 @@
 						name="password"
 						id="password"
 						data-testid="auth-password"
+						authType={type}
 						on:input={(e) => updatePasswordValue(e, attributes.name)}
 					/>
 				{/if}
