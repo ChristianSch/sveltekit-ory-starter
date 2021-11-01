@@ -1,5 +1,14 @@
 import faker from 'faker';
 
+export type Email = {
+	id: string;
+	body: string;
+	dateSent: Date;
+	fromAddress: string;
+	subject: string;
+	toAddresses: string[];
+};
+
 export const urlWithExactPath = (path: string) => Cypress.config().baseUrl + path;
 
 export const generate = {

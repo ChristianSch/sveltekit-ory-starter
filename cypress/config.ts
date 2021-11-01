@@ -1,6 +1,7 @@
 export const apiRoutes = {
 	publicBase: Cypress.env('VITE_KRATOS_PUBLIC_URL') || 'http://127.0.0.1:4433',
 	publicAdmin: Cypress.env('VITE_KRATOS_PUBLIC_URL') || 'http://127.0.0.1:4434',
+	mail: Cypress.env('VITE_MAIL_API_URL') || 'http://127.0.0.1:4437',
 	get register() {
 		return `${this.publicBase}/self-service/registration`;
 	},
