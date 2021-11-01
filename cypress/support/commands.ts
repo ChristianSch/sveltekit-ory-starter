@@ -13,7 +13,7 @@ const register = (email?: string, password?: string) => {
 	cy.visit('/auth/register');
 	cy.getByTestId(REGISTER_FIELDS.email)
 		.should('not.be.disabled')
-		.type(email || data.email);
+		.type(email || data.email, { force: true });
 	cy.getByTestId(REGISTER_FIELDS.password).type(password || data.password);
 	cy.getByTestId(REGISTER_FIELDS.submit).click();
 
@@ -29,7 +29,7 @@ Cypress.Commands.add('logout', logout);
 const login = (email: string, password: string) => {
 	cy.session([email, password], () => {
 		cy.visit('/auth/login');
-		cy.getByTestId(LOGIN_FIELDS.email).type(email);
+		cy.getByTestId(LOGIN_FIELDS.email).should('not.be.disabled').type(email, { force: true });
 		cy.getByTestId(LOGIN_FIELDS.password).type(password);
 		cy.getByTestId(LOGIN_FIELDS.submit).click();
 
@@ -53,7 +53,6 @@ const waitForEmail = (mailCriteria: (mail: Email) => boolean) => {
 	let tries = 0;
 	const doRequest = () =>
 		cy.getEmails().then((mails) => {
-			cy.log(mails);
 			const found = mails.length && mails.length > 0 ? mails.find(mailCriteria) : null;
 			if (tries < 10 && !found) {
 				tries += 1;
