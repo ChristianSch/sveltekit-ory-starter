@@ -5,8 +5,9 @@
 	export let label: string;
 	export let onSubmit: () => void = null;
 	export let type: FlowTypeId = null;
-	import { Eye, EyeOff } from '$lib/components/icon';
+
 	import { getMessage } from '$lib/util';
+	import PasswordFieldWithVisibilityToggle from './PasswordFieldWithVisibilityToggle.svelte';
 	/*
     Populates an object for every node that was returned by Ory Kratos and sets
     its default value if there is one. Allows for easy serialization to submit via
@@ -28,12 +29,6 @@
 
 	const updatePasswordValue = (e, fieldName: string) => {
 		fields[fieldName] = e.target.value;
-	};
-
-	let passwordFields = {};
-	const togglePassword = (id: number) => {
-		// basic true/false toggle for this field
-		passwordFields[id] = !passwordFields[id];
 	};
 
 	$: socials = authUi ? authUi.nodes.filter((node) => node.group === 'oidc') : [];
@@ -73,34 +68,13 @@
 				{/if}
 				{#if attributes.name === 'password'}
 					<label for="password">Password</label>
-					<div class="input-container">
-						<!-- Cannot use two-way binding here because input type is dynamic -->
-						<input
-							value={fields[attributes.name]}
-							on:input={(e) => updatePasswordValue(e, attributes.name)}
-							bind:this={passwordFields[i]}
-							type={passwordFields[i] ? 'password' : 'text'}
-							name="password"
-							id="password"
-							data-testid="auth-password"
-							autocomplete={type === 'registration' ? 'new-password' : 'current-password'}
-						/>
-						<button
-							class="toggle-password"
-							type="button"
-							on:click={() => togglePassword(i)}
-							aria-label={passwordFields[i]
-								? 'Show password as plain text. Warning: this will display your password on the screen.'
-								: 'Hide password'}
-							data-testid="auth-password-toggle"
-						>
-							{#if passwordFields[i]}
-								<i aria-hidden="true"><Eye /></i> Show
-							{:else}
-								<i aria-hidden="true"><EyeOff /></i> Hide
-							{/if}
-						</button>
-					</div>
+					<PasswordFieldWithVisibilityToggle
+						value={fields[attributes.name]}
+						name="password"
+						id="password"
+						data-testid="auth-password"
+						on:input={(e) => updatePasswordValue(e, attributes.name)}
+					/>
 				{/if}
 				{#if attributes.name === 'csrf_token'}
 					<input
@@ -162,39 +136,6 @@
 
 <style>
 	input {
-		border: 1px solid #000;
 		padding: 5px 8px;
-	}
-
-	.input-container {
-		position: relative;
-		display: inline-block;
-	}
-
-	.toggle-password {
-		background: none;
-		border: none;
-		cursor: pointer;
-		font-weight: 300;
-		position: absolute;
-		height: 24px;
-		top: calc(50% - 12px);
-		right: 2px;
-		padding: 5px 5px 5px 10px;
-		line-height: 16px;
-		display: flex;
-		align-items: center;
-		background: #fff;
-	}
-
-	.toggle-password > i {
-		margin-right: 4px;
-		width: 18px;
-		height: 18px;
-	}
-
-	.toggle-password > i :global(svg) {
-		height: 100%;
-		width: 100%;
 	}
 </style>
