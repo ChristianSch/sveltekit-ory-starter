@@ -1,3 +1,3 @@
 import { createInitiator } from './_createFlowInitiator';
 
-export const get = createInitiator('initializeSelfServiceSettingsFlowForBrowsers');
+export const get = createInitiator('initializeSelfServiceSettingsFlowForBrowsers', true);
