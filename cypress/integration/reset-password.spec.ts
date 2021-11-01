@@ -2,7 +2,7 @@ import { RESET_PASSWORD_FIELDS } from '../config';
 import { generate, urlWithExactPath } from '../utils';
 import type { Email } from '../utils';
 
-describe('Register', () => {
+describe('Reset password', () => {
 	beforeEach(() => {
 		cy.visit('/auth/reset-password');
 	});
@@ -37,6 +37,7 @@ describe('Register', () => {
 			cy.document().invoke('write', resetEmail.body);
 			cy.get('a').click();
 			cy.url().should('include', urlWithExactPath('/settings'));
+			cy.url().should('include', '?flow=');
 		});
 	});
 });
