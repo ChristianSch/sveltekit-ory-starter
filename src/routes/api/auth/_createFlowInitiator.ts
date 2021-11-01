@@ -12,12 +12,15 @@ interface GetResponse {
 	};
 }
 
-export const createInitiator = (method: string) => {
+export const createInitiator = (method: string, isSettingsFlow = true) => {
 	return async (req: Request): Promise<GetResponse> => {
 		const cookies = req.headers.cookie;
-
 		try {
-			const response = await authApi[method](cookies);
+			// Temporary workaround until the settings function signature is consistent
+			const promise = isSettingsFlow
+				? authApi[method](undefined, { withCredentials: true, headers: { cookie: cookies } })
+				: authApi[method](cookies);
+			const response = await promise;
 			return {
 				body: {
 					data: response.data

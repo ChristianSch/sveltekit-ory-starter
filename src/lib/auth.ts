@@ -1,4 +1,4 @@
-import { Configuration, V0alpha1Api } from '@ory/kratos-client';
+import { Configuration, V0alpha2Api } from '@ory/kratos-client';
 import type {
 	SelfServiceLoginFlow,
 	SelfServiceRecoveryFlow,
@@ -39,9 +39,19 @@ export const authFlowMap = {
 	login: 'getSelfServiceLoginFlow'
 };
 
-export const authApi = new V0alpha1Api(
-	new Configuration({ basePath: config.auth.publicUrl as string })
+export const authApi = new V0alpha2Api(
+	new Configuration({
+		basePath: config.auth.publicUrl as string,
+		baseOptions: {
+			withCredentials: true
+		}
+	})
 );
-export const authAdminApi = new V0alpha1Api(
-	new Configuration({ basePath: config.auth.adminUrl as string })
+export const authAdminApi = new V0alpha2Api(
+	new Configuration({
+		basePath: config.auth.adminUrl as string,
+		baseOptions: {
+			withCredentials: true
+		}
+	})
 );
