@@ -1,32 +1,17 @@
 <script lang="ts" context="module">
-	import { isString } from '$lib/util';
-	import { config } from '$lib/constants';
 	import PasswordField from '$lib/components/PasswordFieldWithVisibilityToggle.svelte';
 	import type { Load } from '@sveltejs/kit';
-	import type { TAuthFlow } from '$lib/auth';
 
-	export const load: Load = async ({ page, fetch }) => {
-		const flowId = page.query.get('flow');
+	export const load: Load = async ({ fetch }) => {
+		const settingsFlowResult = await fetch(`/api/auth/initiate-settings`, {
+			credentials: 'include'
+		});
 
-		if (!flowId || !isString(flowId)) {
+		if (settingsFlowResult.ok) {
+			const { data } = await settingsFlowResult.json();
 			return {
-				status: 302,
-				redirect: `${config.auth.publicUrl}/self-service/settings/browser`
+				props: { authUi: data.ui }
 			};
-		}
-
-		try {
-			const res = await fetch(`/api/auth/settings`, {
-				headers: { flow_id: flowId },
-				credentials: 'include'
-			});
-			const { data: flow }: { status: number; data: TAuthFlow } = await res.json();
-			return {
-				props: { authUi: flow.ui }
-			};
-		} catch (err) {
-			// TODO: handle
-			console.log(err);
 		}
 
 		return {};
@@ -41,9 +26,7 @@
 
 	export let authUi: UiContainer;
 
-	$: ui = authUi;
-
-	let fields = ui.nodes.reduce((acc, node) => {
+	let fields = authUi.nodes.reduce((acc, node) => {
 		const { name, value } = node.attributes as UiNodeInputAttributes;
 		acc[name] = {
 			value: value || '',
@@ -51,6 +34,8 @@
 		};
 		return acc;
 	}, {});
+
+	$: ui = authUi;
 
 	const updatePasswordValue = (e) => {
 		fields['password'].value = e.target.value;
@@ -74,7 +59,6 @@
 		// TODO: handle error
 	};
 
-	$: console.log(ui);
 	$: formMessage = ui.messages && ui.messages.length > 0 ? getMessage(ui.messages[0]) : null;
 </script>
 
