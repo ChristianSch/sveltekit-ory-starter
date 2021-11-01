@@ -17,7 +17,10 @@ describe('Login', () => {
 	});
 
 	it('should have a fillable email field', () => {
-		cy.getByTestId(LOGIN_FIELDS.email).type('foo').should('have.value', 'foo');
+		cy.getByTestId(LOGIN_FIELDS.email)
+			.should('not.be.disabled')
+			.type('foo', { force: true })
+			.should('have.value', 'foo');
 	});
 
 	it('should have a fillable password field', () => {
