@@ -1,18 +1,7 @@
 /// <reference types="cypress" />
 
-import faker from 'faker';
 import { REGISTER_FIELDS, LOGIN_FIELDS } from '../config';
-
-export const urlWithExactPath = (path: string) => Cypress.config().baseUrl + path;
-
-export const generate = {
-	email: () => faker.internet.email(),
-	password: (len?: number) => faker.internet.password(len || 16),
-	registrationData: () => ({
-		email: faker.internet.email(),
-		password: faker.internet.password(16)
-	})
-};
+import { generate, urlWithExactPath } from '../utils';
 
 Cypress.Commands.add('getByTestId', (selector, ...args) => {
 	return cy.get(`[data-testid=${selector}]`, ...args);

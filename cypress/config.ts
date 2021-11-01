@@ -22,3 +22,8 @@ export enum REGISTER_FIELDS {
 	password_toggle = 'auth-password-toggle',
 	submit = 'auth-submit'
 }
+
+export enum RESET_PASSWORD_FIELDS {
+	email = 'auth-email',
+	submit = 'auth-submit'
+}

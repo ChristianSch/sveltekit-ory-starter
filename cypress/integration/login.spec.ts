@@ -1,5 +1,5 @@
 import { LOGIN_FIELDS } from '../config';
-import { generate } from '../support/commands';
+import { generate } from '../utils';
 
 describe('Login', () => {
 	const registrationData = generate.registrationData();
