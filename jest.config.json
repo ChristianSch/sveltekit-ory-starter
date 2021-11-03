@@ -26,5 +26,8 @@
 	],
 	"setupFilesAfterEnv": [
 		"@testing-library/jest-dom/extend-expect"
+	],
+	"testPathIgnorePatterns": [
+		"<rootDir>/cypress/"
 	]
 }
