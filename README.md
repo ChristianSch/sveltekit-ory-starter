@@ -4,7 +4,7 @@ This project aims to be a "living", continuously maintained starting template an
 
 Note that neither Svelte Kit or Ory Kratos are in version 1, and their APIs are subject to frequent change. This template attempts to shadow both libraries' latest versions.
 
-- Current Svelte Kit version: **1.0.0-next.192**
+- Current Svelte Kit version: **1.0.0-next.210**
 - Current Ory Kratos version: **0.8.0-alpha.3**
 
 ## Why
